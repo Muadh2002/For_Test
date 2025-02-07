@@ -1,8 +1,18 @@
-const API_KEY = 'YOUR_OPENWEATHERMAP_API_KEY'; 
+const API_KEY = '6f3860e91d49224ae7a7d91aadc39fc3';
 
 document.getElementById('search-btn').addEventListener('click', () => {
-    const city = document.getElementById('city-input').value;
-    fetchWeather(city);
+    const city = document.getElementById('city-input').value.trim();
+    if (city) {
+        fetchWeather(city);
+    } else {
+        alert('Please enter a city name');
+    }
+});
+
+document.getElementById('city-input').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        document.getElementById('search-btn').click();
+    }
 });
 
 async function fetchWeather(city) {
@@ -29,7 +39,6 @@ function displayWeather(data) {
     document.getElementById('humidity').textContent = `Humidity: ${data.main.humidity}%`;
     document.getElementById('wind-speed').textContent = `Wind: ${data.wind.speed} m/s`;
     
-    // Add weather icon
-    const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+    const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     document.getElementById('weather-icon').innerHTML = `<img src="${iconUrl}" alt="Weather Icon">`;
 }
